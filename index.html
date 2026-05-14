@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Diary</title>
+
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- LANDING / PUBLIC PAGE -->
+  <section class="hero" id="heroPage">
+
+    <div class="overlay"></div>
+
+    <nav>
+      <h1 class="logo">My Diary</h1>
+    </nav>
+
+    <div class="hero-content">
+
+      <h2 class="main-title">My Diary</h2>
+
+      <p class="subtitle">
+        A place for thoughts, memories and moments.
+      </p>
+
+      <!-- DIARY GRID -->
+      <div class="diary-grid" id="diaryGrid">
+
+        <div class="diary-card" onclick="openDiary(0)">
+          <img src="img3.jpeg" alt="">
+          <h3 id="diaryName0">Diary 1</h3>
+        </div>
+
+        <div class="diary-card" onclick="openDiary(1)">
+          <img src="img3.jpeg" alt="">
+          <h3 id="diaryName1">Diary 2</h3>
+        </div>
+
+        <div class="diary-card" onclick="openDiary(2)">
+          <img src="img3.jpeg" alt="">
+          <h3 id="diaryName2">Diary 3</h3>
+        </div>
+
+        <div class="diary-card" onclick="openDiary(3)">
+          <img src="img3.jpeg" alt="">
+          <h3 id="diaryName3">Diary 4</h3>
+        </div>
+
+        <div class="diary-card" onclick="openDiary(4)">
+          <img src="img3.jpeg" alt="">
+          <h3 id="diaryName4">Diary 5</h3>
+        </div>
+
+        <div class="diary-card" onclick="openDiary(5)">
+          <img src="img3.jpeg" alt="">
+          <h3 id="diaryName5">Diary 6</h3>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- SECRET BUTTON -->
+    <div id="hiddenPortal"></div>
+
+  </section>
+
+
+  <!-- PRIVATE PAGE -->
+<section class="private-page hidden" id="privatePage">
+
+  <div class="private-overlay"></div>
+
+  <div class="private-wrapper">
+
+    <div class="private-top">
+
+      <h1>Private Diaries</h1>
+
+      <button id="logoutBtn">
+        Logout
+      </button>
+
+    </div>
+
+      <!-- PRIVATE DIARY GRID -->
+      <div class="diary-grid">
+
+        <div class="diary-card" onclick="openPrivateDiary(0)">
+          <img src="img3.jpeg" alt="">
+          <h3 id="privateDiary0">Diary 1</h3>
+        </div>
+
+        <div class="diary-card" onclick="openPrivateDiary(1)">
+          <img src="img3.jpeg" alt="">
+          <h3 id="privateDiary1">Diary 2</h3>
+        </div>
+
+        <div class="diary-card" onclick="openPrivateDiary(2)">
+          <img src="img3.jpeg" alt="">
+          <h3 id="privateDiary2">Diary 3</h3>
+        </div>
+
+        <div class="diary-card" onclick="openPrivateDiary(3)">
+          <img src="img3.jpeg" alt="">
+          <h3 id="privateDiary3">Diary 4</h3>
+        </div>
+
+        <div class="diary-card" onclick="openPrivateDiary(4)">
+          <img src="img3.jpeg" alt="">
+          <h3 id="privateDiary4">Diary 5</h3>
+        </div>
+
+        <div class="diary-card" onclick="openPrivateDiary(5)">
+          <img src="img3.jpeg" alt="">
+          <h3 id="privateDiary5">Diary 6</h3>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- SINGLE DIARY WINDOW -->
+  <section class="single-diary hidden"
+  id="singleDiaryPage">
+
+    <div class="single-overlay"></div>
+
+    <div class="single-container">
+
+      <div class="single-top">
+
+        <h2 id="openedDiaryTitle">
+          Diary
+        </h2>
+
+        <button onclick="backToPrivate()">
+          Back
+        </button>
+
+      </div>
+
+      <!-- WRITING -->
+      <div class="writing-box">
+
+        <input
+        type="text"
+        id="entryTitle"
+        placeholder="Entry title..."
+        >
+
+        <textarea
+        id="entryText"
+        placeholder="Write your thoughts..."
+        ></textarea>
+
+        <button id="saveBtn">
+          Save Entry
+        </button>
+
+      </div>
+
+      <!-- ENTRIES -->
+      <div class="entries-container"
+      id="entriesContainer"></div>
+
+    </div>
+
+  </section>
+
+
+
+  <script src="script.js"></script>
+</body>
+</html>
