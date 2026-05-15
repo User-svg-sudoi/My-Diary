@@ -3,178 +3,114 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My Diary</title>
+  <title>DailyFlow</title>
 
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
-  <!-- LANDING / PUBLIC PAGE -->
-  <section class="hero" id="heroPage">
+  <!-- PUBLIC LANDING PAGE -->
+  <section class="hero">
 
     <div class="overlay"></div>
 
     <nav>
-      <h1 class="logo">My Diary</h1>
+      <h1 class="logo">DailyFlow</h1>
     </nav>
 
-    <div class="hero-content">
+    <div class="hero-content fade-up">
 
-      <h2 class="main-title">My Diary</h2>
+      <h2>
+        Your Daily Story Starts Here
+      </h2>
 
-      <p class="subtitle">
-        A place for thoughts, memories and moments.
+      <p>
+        Organize your day, track your tasks,
+        and stay consistent.
       </p>
 
-      <!-- DIARY GRID -->
-      <div class="diary-grid" id="diaryGrid">
+      <!-- TASK BOX -->
+      <div class="task-box glass">
 
-        <div class="diary-card" onclick="openDiary(0)">
-          <img src="img3.jpeg" alt="">
-          <h3 id="diaryName0">Diary 1</h3>
+        <h3>Today's Tasks</h3>
+
+        <div class="task-input-area">
+
+          <input
+          type="text"
+          id="taskInput"
+          placeholder="Add your task..."
+          >
+
+          <button id="addTaskBtn">
+            Add
+          </button>
+
         </div>
 
-        <div class="diary-card" onclick="openDiary(1)">
-          <img src="img3.jpeg" alt="">
-          <h3 id="diaryName1">Diary 2</h3>
-        </div>
-
-        <div class="diary-card" onclick="openDiary(2)">
-          <img src="img3.jpeg" alt="">
-          <h3 id="diaryName2">Diary 3</h3>
-        </div>
-
-        <div class="diary-card" onclick="openDiary(3)">
-          <img src="img3.jpeg" alt="">
-          <h3 id="diaryName3">Diary 4</h3>
-        </div>
-
-        <div class="diary-card" onclick="openDiary(4)">
-          <img src="img3.jpeg" alt="">
-          <h3 id="diaryName4">Diary 5</h3>
-        </div>
-
-        <div class="diary-card" onclick="openDiary(5)">
-          <img src="img3.jpeg" alt="">
-          <h3 id="diaryName5">Diary 6</h3>
-        </div>
+        <ul id="taskList"></ul>
 
       </div>
 
     </div>
 
-    <!-- SECRET BUTTON -->
+    <!-- SECRET ACCESS -->
     <div id="hiddenPortal"></div>
 
   </section>
 
 
-  <!-- PRIVATE PAGE -->
-<section class="private-page hidden" id="privatePage">
+  <!-- PRIVATE DIARY -->
+  <section
+  id="privateSection"
+  class="private-section hidden">
 
-  <div class="private-overlay"></div>
+    <div class="private-overlay"></div>
 
-  <div class="private-wrapper">
+    <div class="private-container fade-up">
 
-    <div class="private-top">
+      <div class="top-bar">
 
-      <h1>Private Diaries</h1>
+        <h2>Private Diary</h2>
 
-      <button id="logoutBtn">
-        Logout
-      </button>
-
-    </div>
-
-      <!-- PRIVATE DIARY GRID -->
-      <div class="diary-grid">
-
-        <div class="diary-card" onclick="openPrivateDiary(0)">
-          <img src="img3.jpeg" alt="">
-          <h3 id="privateDiary0">Diary 1</h3>
-        </div>
-
-        <div class="diary-card" onclick="openPrivateDiary(1)">
-          <img src="img3.jpeg" alt="">
-          <h3 id="privateDiary1">Diary 2</h3>
-        </div>
-
-        <div class="diary-card" onclick="openPrivateDiary(2)">
-          <img src="img3.jpeg" alt="">
-          <h3 id="privateDiary2">Diary 3</h3>
-        </div>
-
-        <div class="diary-card" onclick="openPrivateDiary(3)">
-          <img src="img3.jpeg" alt="">
-          <h3 id="privateDiary3">Diary 4</h3>
-        </div>
-
-        <div class="diary-card" onclick="openPrivateDiary(4)">
-          <img src="img3.jpeg" alt="">
-          <h3 id="privateDiary4">Diary 5</h3>
-        </div>
-
-        <div class="diary-card" onclick="openPrivateDiary(5)">
-          <img src="img3.jpeg" alt="">
-          <h3 id="privateDiary5">Diary 6</h3>
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- SINGLE DIARY WINDOW -->
-  <section class="single-diary hidden"
-  id="singleDiaryPage">
-
-    <div class="single-overlay"></div>
-
-    <div class="single-container">
-
-      <div class="single-top">
-
-        <h2 id="openedDiaryTitle">
-          Diary
-        </h2>
-
-        <button onclick="backToPrivate()">
-          Back
+        <button id="logoutBtn">
+          Logout
         </button>
 
       </div>
 
-      <!-- WRITING -->
-      <div class="writing-box">
+      <!-- DIARY ENTRY -->
+      <div class="diary-entry-box">
 
         <input
         type="text"
-        id="entryTitle"
-        placeholder="Entry title..."
+        id="diaryTitle"
+        placeholder="Diary Title"
         >
 
         <textarea
-        id="entryText"
+        id="diaryText"
         placeholder="Write your thoughts..."
         ></textarea>
 
-        <button id="saveBtn">
+        <button id="saveDiaryBtn">
           Save Entry
         </button>
 
       </div>
 
-      <!-- ENTRIES -->
-      <div class="entries-container"
-      id="entriesContainer"></div>
+      <!-- SAVED ENTRIES -->
+      <div class="saved-entries">
+
+        <h3>Your Entries</h3>
+
+        <div id="entriesContainer"></div>
+
+      </div>
 
     </div>
 
   </section>
-
-
 
   <script src="script.js"></script>
 </body>

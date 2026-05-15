@@ -1,202 +1,241 @@
-const heroPage =
-document.getElementById("heroPage");
+// TASK SYSTEM
 
-const privatePage =
-document.getElementById("privatePage");
+const taskInput =
+document.getElementById("taskInput");
 
-const singleDiaryPage =
-document.getElementById("singleDiaryPage");
+const addTaskBtn =
+document.getElementById("addTaskBtn");
 
-const logoutBtn =
-document.getElementById("logoutBtn");
+const taskList =
+document.getElementById("taskList");
 
-const openedDiaryTitle =
-document.getElementById("openedDiaryTitle");
-
-const entryTitle =
-document.getElementById("entryTitle");
-
-const entryText =
-document.getElementById("entryText");
-
-const saveBtn =
-document.getElementById("saveBtn");
-
-const entriesContainer =
-document.getElementById("entriesContainer");
-
-let currentDiary = null;
+let tasks =
+JSON.parse(localStorage.getItem("tasks"))
+|| [];
 
 
-// DEFAULT PRIVATE DIARY NAMES
-let diaryNames =
-JSON.parse(localStorage.getItem("diaryNames"))
-|| [
-  "Diary 1",
-  "Diary 2",
-  "Diary 3",
-  "Diary 4",
-  "Diary 5",
-  "Diary 6"
-];
+// SAVE TASKS
+function saveTasks(){
+
+  localStorage.setItem(
+    "tasks",
+    JSON.stringify(tasks)
+  );
+
+}
 
 
-// LOAD PRIVATE DIARY NAMES
-function loadDiaryNames(){
+// RENDER TASKS
+function renderTasks(){
 
-  diaryNames.forEach((name,index)=>{
+  taskList.innerHTML = "";
 
-    const diary =
-    document.getElementById(
-      `privateDiary${index}`
+  tasks.forEach((task,index)=>{
+
+    const li =
+    document.createElement("li");
+
+    li.classList.add("task-item");
+
+    li.innerHTML = `
+
+      <div class="task-left">
+
+        <input
+        type="checkbox"
+        ${task.completed ? "checked" : ""}>
+
+        <span class="${
+          task.completed
+          ? "completed"
+          : ""
+        }">
+
+          ${task.text}
+
+        </span>
+
+      </div>
+
+      <button class="delete-btn">
+        ✕
+      </button>
+
+    `;
+
+    const checkbox =
+    li.querySelector("input");
+
+    const deleteBtn =
+    li.querySelector(".delete-btn");
+
+    checkbox.addEventListener(
+      "change",
+      ()=>{
+
+        tasks[index].completed =
+        checkbox.checked;
+
+        saveTasks();
+        renderTasks();
+
+      }
     );
 
-    if(diary){
+    deleteBtn.addEventListener(
+      "click",
+      ()=>{
 
-      diary.innerText = name;
+        tasks.splice(index,1);
 
-    }
+        saveTasks();
+        renderTasks();
+
+      }
+    );
+
+    taskList.appendChild(li);
 
   });
 
 }
 
-loadDiaryNames();
+
+// ADD TASK
+addTaskBtn.addEventListener(
+  "click",
+  ()=>{
+
+    const text =
+    taskInput.value.trim();
+
+    if(text === "") return;
+
+    tasks.push({
+
+      text,
+      completed:false
+
+    });
+
+    saveTasks();
+    renderTasks();
+
+    taskInput.value = "";
+
+  }
+);
+
+renderTasks();
 
 
 // SECRET ACCESS
-document.querySelector(".logo")
-.addEventListener("dblclick",()=>{
 
-  const password =
-  prompt("Enter Password");
+const hiddenPortal =
+document.getElementById(
+  "hiddenPortal"
+);
 
-  if(password === "WhyAlwaysMe"){
+const privateSection =
+document.getElementById(
+  "privateSection"
+);
 
-    heroPage.classList.add("hidden");
+const heroSection =
+document.querySelector(".hero");
 
-    privatePage.classList.remove("hidden");
+hiddenPortal.addEventListener(
+  "click",
+  ()=>{
+
+    const password =
+    prompt("Enter Password");
+
+    if(password === "WhyAlwaysMe"){
+
+      heroSection.classList.add(
+        "hidden"
+      );
+
+      privateSection.classList.remove(
+        "hidden"
+      );
+
+    }
+
+    else{
+
+      alert("Wrong Password");
+
+    }
 
   }
-
-  else{
-
-    alert("Wrong Password");
-
-  }
-
-});
-
-
-// OPEN PRIVATE DIARY
-function openPrivateDiary(index){
-
-  currentDiary = diaryNames[index];
-
-  privatePage.classList.add("hidden");
-
-  singleDiaryPage.classList.remove("hidden");
-
-  openedDiaryTitle.innerText =
-  currentDiary;
-
-  renderEntries();
-
-}
-
-
-// BACK TO PRIVATE PAGE
-function backToPrivate(){
-
-  singleDiaryPage.classList.add("hidden");
-
-  privatePage.classList.remove("hidden");
-
-}
+);
 
 
 // LOGOUT
-logoutBtn.addEventListener("click",()=>{
 
-  privatePage.classList.add("hidden");
+const logoutBtn =
+document.getElementById(
+  "logoutBtn"
+);
 
-  heroPage.classList.remove("hidden");
+logoutBtn.addEventListener(
+  "click",
+  ()=>{
 
-});
-
-
-// SAVE ENTRY
-saveBtn.addEventListener("click",()=>{
-
-  const title =
-  entryTitle.value.trim();
-
-  const text =
-  entryText.value.trim();
-
-  if(!title || !text) return;
-
-  // GET OLD ENTRIES
-  const oldEntries =
-  JSON.parse(localStorage.getItem(currentDiary))
-  || [];
-
-  // RENAME DIARY
-  if(oldEntries.length === 0){
-
-    const diaryIndex =
-    diaryNames.indexOf(currentDiary);
-
-    diaryNames[diaryIndex] = title;
-
-    localStorage.setItem(
-      "diaryNames",
-      JSON.stringify(diaryNames)
+    privateSection.classList.add(
+      "hidden"
     );
 
-    currentDiary = title;
-
-    loadDiaryNames();
-
-    openedDiaryTitle.innerText =
-    currentDiary;
+    heroSection.classList.remove(
+      "hidden"
+    );
 
   }
+);
 
-  const today = new Date();
 
-  const entry = {
+// DIARY SYSTEM
 
-    title,
-    text,
+const diaryTitle =
+document.getElementById(
+  "diaryTitle"
+);
 
-    date:
-    today.toLocaleDateString()
+const diaryText =
+document.getElementById(
+  "diaryText"
+);
 
-  };
+const saveDiaryBtn =
+document.getElementById(
+  "saveDiaryBtn"
+);
 
-  // GET UPDATED ENTRIES
-  const updatedEntries =
-  JSON.parse(localStorage.getItem(currentDiary))
-  || [];
+const entriesContainer =
+document.getElementById(
+  "entriesContainer"
+);
 
-  updatedEntries.push(entry);
+let diaryEntries =
+JSON.parse(
+  localStorage.getItem(
+    "diaryEntries"
+  )
+)
+|| [];
+
+
+// SAVE ENTRIES
+function saveDiaryEntries(){
 
   localStorage.setItem(
-
-    currentDiary,
-
-    JSON.stringify(updatedEntries)
-
+    "diaryEntries",
+    JSON.stringify(diaryEntries)
   );
 
-  // CLEAR INPUTS
-  entryTitle.value = "";
-  entryText.value = "";
-
-  renderEntries();
-
-});
+}
 
 
 // RENDER ENTRIES
@@ -204,52 +243,47 @@ function renderEntries(){
 
   entriesContainer.innerHTML = "";
 
-  const entries =
-  JSON.parse(localStorage.getItem(currentDiary))
-  || [];
-
   const reversedEntries =
-  [...entries].reverse();
+  [...diaryEntries].reverse();
 
-  reversedEntries.forEach((entry,index)=>{
+  reversedEntries.forEach(
+    (entry,index)=>{
 
-    const div =
-    document.createElement("div");
+      const card =
+      document.createElement("div");
 
-    div.classList.add("entry");
+      card.classList.add(
+        "entry-card"
+      );
 
-    const realIndex =
-    entries.length - 1 - index;
+      const realIndex =
+      diaryEntries.length - 1 - index;
 
-    div.innerHTML = `
+      card.innerHTML = `
 
-      <div class="entry-header">
+        <h4>
+          ${entry.title}
+        </h4>
 
-        <h3>${entry.title}</h3>
+        <p>
+          ${entry.text}
+        </p>
 
-        <span class="entry-date">
+        <button
+        onclick="deleteEntry(${realIndex})">
 
-          ${entry.date}
+          Delete
 
-        </span>
+        </button>
 
-      </div>
+      `;
 
-      <p>${entry.text}</p>
+      entriesContainer.appendChild(
+        card
+      );
 
-      <button
-      class="delete-btn"
-      onclick="deleteEntry(${realIndex})">
-
-        Delete
-
-      </button>
-
-    `;
-
-    entriesContainer.appendChild(div);
-
-  });
+    }
+  );
 
 }
 
@@ -257,20 +291,43 @@ function renderEntries(){
 // DELETE ENTRY
 function deleteEntry(index){
 
-  const entries =
-  JSON.parse(localStorage.getItem(currentDiary))
-  || [];
+  diaryEntries.splice(index,1);
 
-  entries.splice(index,1);
-
-  localStorage.setItem(
-
-    currentDiary,
-
-    JSON.stringify(entries)
-
-  );
+  saveDiaryEntries();
 
   renderEntries();
 
 }
+
+
+// SAVE NEW ENTRY
+saveDiaryBtn.addEventListener(
+  "click",
+  ()=>{
+
+    const title =
+    diaryTitle.value.trim();
+
+    const text =
+    diaryText.value.trim();
+
+    if(!title || !text) return;
+
+    diaryEntries.push({
+
+      title,
+      text
+
+    });
+
+    saveDiaryEntries();
+
+    renderEntries();
+
+    diaryTitle.value = "";
+    diaryText.value = "";
+
+  }
+);
+
+renderEntries();
