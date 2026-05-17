@@ -1,133 +1,108 @@
-// TASK SYSTEM
+const memoInput =
+document.getElementById("memoInput");
 
-const taskInput =
-document.getElementById("taskInput");
+const saveMemoBtn =
+document.getElementById("saveMemoBtn");
 
-const addTaskBtn =
-document.getElementById("addTaskBtn");
+const memoContainer =
+document.getElementById("memoContainer");
 
-const taskList =
-document.getElementById("taskList");
-
-let tasks =
-JSON.parse(localStorage.getItem("tasks"))
+let memos =
+JSON.parse(localStorage.getItem("memos"))
 || [];
 
 
-// SAVE TASKS
-function saveTasks(){
+// SAVE MEMOS
+function saveMemos(){
 
   localStorage.setItem(
-    "tasks",
-    JSON.stringify(tasks)
+    "memos",
+    JSON.stringify(memos)
   );
 
 }
 
 
-// RENDER TASKS
-function renderTasks(){
+// RENDER MEMOS
+function renderMemos(){
 
-  taskList.innerHTML = "";
+  memoContainer.innerHTML = "";
 
-  tasks.forEach((task,index)=>{
+  const reversedMemos =
+  [...memos].reverse();
 
-    const li =
-    document.createElement("li");
+  reversedMemos.forEach(
+    (memo,index)=>{
 
-    li.classList.add("task-item");
+      const card =
+      document.createElement("div");
 
-    li.innerHTML = `
+      card.classList.add(
+        "memo-card"
+      );
 
-      <div class="task-left">
+      const realIndex =
+      memos.length - 1 - index;
 
-        <input
-        type="checkbox"
-        ${task.completed ? "checked" : ""}>
+      card.innerHTML = `
 
-        <span class="${
-          task.completed
-          ? "completed"
-          : ""
-        }">
+        <p>${memo.text}</p>
 
-          ${task.text}
+        <button
+        onclick="deleteMemo(${realIndex})">
 
-        </span>
+          Delete
 
-      </div>
+        </button>
 
-      <button class="delete-btn">
-        ✕
-      </button>
+      `;
 
-    `;
+      memoContainer.appendChild(card);
 
-    const checkbox =
-    li.querySelector("input");
-
-    const deleteBtn =
-    li.querySelector(".delete-btn");
-
-    checkbox.addEventListener(
-      "change",
-      ()=>{
-
-        tasks[index].completed =
-        checkbox.checked;
-
-        saveTasks();
-        renderTasks();
-
-      }
-    );
-
-    deleteBtn.addEventListener(
-      "click",
-      ()=>{
-
-        tasks.splice(index,1);
-
-        saveTasks();
-        renderTasks();
-
-      }
-    );
-
-    taskList.appendChild(li);
-
-  });
+    }
+  );
 
 }
 
 
-// ADD TASK
-addTaskBtn.addEventListener(
+// DELETE MEMO
+function deleteMemo(index){
+
+  memos.splice(index,1);
+
+  saveMemos();
+
+  renderMemos();
+
+}
+
+
+// SAVE NEW MEMO
+saveMemoBtn.addEventListener(
   "click",
   ()=>{
 
     const text =
-    taskInput.value.trim();
+    memoInput.value.trim();
 
-    if(text === "") return;
+    if(!text) return;
 
-    tasks.push({
+    memos.push({
 
-      text,
-      completed:false
+      text
 
     });
 
-    saveTasks();
-    renderTasks();
+    saveMemos();
 
-    taskInput.value = "";
+    renderMemos();
+
+    memoInput.value = "";
 
   }
 );
 
-renderTasks();
-
+renderMemos();
 
 // SECRET ACCESS
 

@@ -29,26 +29,25 @@
         and stay consistent.
       </p>
 
-      <!-- TASK BOX -->
-      <div class="task-box glass">
+      <!-- MEMO BOX -->
+      <div class="memo-box glass">
 
-        <h3>Today's Tasks</h3>
+        <h3>Daily Notes</h3>
 
-        <div class="task-input-area">
+        <div class="memo-input-area">
 
-          <input
-          type="text"
-          id="taskInput"
-          placeholder="Add your task..."
-          >
+          <textarea
+          id="memoInput"
+          placeholder="Write your thoughts, reminders, ideas..."
+          ></textarea>
 
-          <button id="addTaskBtn">
-            Add
+          <button id="saveMemoBtn">
+            Save Note
           </button>
 
         </div>
 
-        <ul id="taskList"></ul>
+        <div id="memoContainer"></div>
 
       </div>
 
